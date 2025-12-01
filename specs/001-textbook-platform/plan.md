@@ -48,6 +48,58 @@ The "Physical AI & Humanoid Robotics Textbook Platform" project aims to create a
 
 **Scale/Scope**: Creation of a prototype online textbook. Core scope includes accessible Docusaurus site and functional RAG chatbot. Bonus scope includes user authentication, personalization, and localization.
 
+## Deployment Strategy:
+
+*   **Frontend (Docusaurus):**
+    *   **Hosting:** GitHub Pages.
+    *   **CI/CD:** GitHub Actions will be configured to automatically build the Docusaurus site and deploy it to GitHub Pages upon pushes to the `master` branch or a dedicated `gh-pages` branch.
+*   **Backend (FastAPI):**
+    *   **Hosting:** Serverless container platform such as Google Cloud Run or AWS App Runner.
+    *   **CI/CD:** GitHub Actions will build Docker images of the FastAPI application and deploy them to the chosen serverless container platform upon pushes to the `master` branch.
+
+## Security Considerations:
+
+*   **API Key Management:** Sensitive API keys (OpenAI, Qdrant, Neon) will be stored as environment variables in deployment environments and managed via secure secrets management services (e.g., GitHub Secrets, Google Secret Manager, AWS Secrets Manager).
+*   **Input Validation:** Strict input validation will be implemented for all FastAPI API endpoints using Pydantic models to prevent injection attacks (e.g., SQL injection, prompt injection) and ensure data integrity.
+*   **User Authentication (Bonus):** If implemented, `better-auth.com` will handle user credentials securely. JWTs will be used for session management, with appropriate security measures (e.g., HTTPS-only, HttpOnly cookies).
+*   **Data Protection:** Data at rest in Neon Postgres and Qdrant will be encrypted. Role-based access control will be implemented for backend services where applicable.
+*   **Rate Limiting:** Implement API rate limiting on the FastAPI backend to protect against abuse and ensure service availability.
+
+## Error Handling, Logging, and Monitoring (Observability):
+
+*   **Error Handling:** Centralized exception handling will be implemented in FastAPI to return consistent and informative error responses (e.g., using `HTTPException` and custom exception handlers).
+*   **Logging:** Structured logging (e.g., JSON format) will be used for the FastAPI backend, capturing request details, errors, warnings, and key events. Client-side errors in Docusaurus will be logged to the browser console.
+*   **Monitoring:** Integrate with platform-specific monitoring tools (e.g., Google Cloud Monitoring, AWS CloudWatch) to track API performance (latency, throughput), error rates, and resource utilization. Set up alerts for critical thresholds.
+
+## Scalability Considerations:
+
+*   **FastAPI Backend:** FastAPI is designed for high concurrency with its ASGI framework (e.g., Uvicorn). It will be horizontally scaled by deploying multiple instances behind a load balancer on chosen serverless container platforms.
+*   **Neon Serverless Postgres:** Benefits from automatic scaling of compute and storage resources based on demand, reducing manual intervention.
+*   **Qdrant Cloud:** As a managed service, Qdrant Cloud handles vector database scaling automatically.
+*   **OpenAI/ChatKit SDKs:** Scalability depends on OpenAI's infrastructure and API rate limits; robust retry mechanisms and caching will be implemented to mitigate this.
+
+## Alternatives Considered for Major Architectural Choices:
+
+*   **Backend Framework (FastAPI vs. Node.js/Express.js):** FastAPI (Python) was chosen over Node.js/Express.js for its superior performance with asynchronous operations, strong type hinting, built-in data validation (Pydantic), and better ecosystem integration with Python-based AI/ML libraries (OpenAI SDKs, RAG components). Node.js/Express.js would have offered a unified language stack with the Docusaurus frontend but less native synergy with the specialized AI libraries required for this project.
+*   **Vector Database (Qdrant vs. Pinecone/Weaviate):** Qdrant Cloud Free Tier was selected due to its generous free tier, ease of setup, and good performance for vector search, making it highly suitable for a hackathon project without immediate cost or complex infrastructure concerns. Pinecone and Weaviate were considered as strong alternatives but might have less accessible free tiers or steeper learning curves for rapid prototyping.
+
+## Content Management Workflow:
+
+*   **Textbook Content Storage:** All textbook content will be maintained as Markdown files within the Docusaurus `docs/` directory.
+*   **AI Content Generation (Spec-Kit Plus & Claude Code):** AI tools (Spec-Kit Plus, Claude Code) will be primarily used to:
+    *   Generate initial drafts of new chapters or sections.
+    *   Expand existing content based on specific prompts.
+    *   Summarize complex topics for different learning levels.
+    *   Create quizzes or interactive elements (if Docusaurus supports).
+    *   The output from these tools will be integrated into the Markdown files, with human review and refinement steps to ensure accuracy, educational quality, and adherence to the constitution's principles.
+*   **Embedding Generation & Qdrant Integration:**
+    *   A dedicated Python script (likely residing in `backend/tools` or a separate `scripts/` directory) will be developed to:
+        *   Parse the Markdown content from Docusaurus `docs/`.
+        *   Chunk the text into manageable segments.
+        *   Generate vector embeddings for each segment using an OpenAI embedding model.
+        *   Upload and index these embeddings into the Qdrant Cloud vector database.
+    *   This process will be designed to be re-runnable (e.g., via a CI/CD step or a manual command) whenever textbook content changes, ensuring the chatbot's knowledge base is up-to-date.
+
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
@@ -82,10 +134,10 @@ The following constitutional principles and requirements are directly addressed 
 ```text
 specs/001-textbook-platform/
 ├── plan.md              # This file (/sp.plan command output)
-├── research.md          # Phase 0 output (/sp.plan command) - NEEDS CLARIFICATION: will be generated
-├── data-model.md        # Phase 1 output (/sp.plan command) - NEEDS CLARIFICATION: will be generated
-├── quickstart.md        # Phase 1 output (/sp.plan command) - NEEDS CLARIFICATION: will be generated
-├── contracts/           # Phase 1 output (/sp.plan command) - NEEDS CLARIFICATION: will be generated
+├── research.md          # Phase 0 output (/sp.plan command) - resolved
+├── data-model.md        # Phase 1 output (/sp.plan command) - generated
+├── quickstart.md        # Phase 1 output (/sp.plan command) - generated
+├── contracts/           # Phase 1 output (/sp.plan command) - generated
 └── tasks.md             # Phase 2 output (/sp.tasks command - NOT created by /sp.plan)
 ```
 
@@ -119,4 +171,3 @@ tools/ (AI Content Generation)
 ## Complexity Tracking
 
 This section will be filled only if Constitution Check has violations that must be justified. Currently, no violations detected.
-
