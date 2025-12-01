@@ -19,14 +19,24 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 2. **Load context**: Read FEATURE_SPEC and `.specify/memory/constitution.md`. Load IMPL_PLAN template (already copied).
 
-3. **Execute plan workflow**: Follow the structure in IMPL_PLAN template to:
-   - Fill Technical Context (mark unknowns as "NEEDS CLARIFICATION")
-   - Fill Constitution Check section from constitution
-   - Evaluate gates (ERROR if violations unjustified)
-   - Phase 0: Generate research.md (resolve all NEEDS CLARIFICATION)
-   - Phase 1: Generate data-model.md, contracts/, quickstart.md
-   - Phase 1: Update agent context by running the agent script
-   - Re-evaluate Constitution Check post-design
+3. **Execute plan workflow**: Generate a detailed `plan.md` artifact by meticulously following the `IMPL_PLAN` template and incorporating insights from `FEATURE_SPEC` and `.specify/memory/constitution.md`. Ensure the plan addresses the following:
+   - **Summary**: Concise overview of the feature and technical approach.
+   - **Technical Context**:
+     - Fill all subsections, marking any remaining unknowns as "NEEDS CLARIFICATION" (to be resolved in Phase 0 Research).
+     - Explicitly detail Language/Version, Primary Dependencies, Storage, Testing, Target Platform, Project Type, Performance Goals, Constraints, and Scale/Scope.
+     - **Add specific details for deployment strategy (frontend & backend, including CI/CD overview).**
+     - **Incorporate initial thoughts on security considerations (API key management, data protection, input validation).**
+     - **Outline a strategy for error handling, logging, and monitoring (observability).**
+     - **Address scalability considerations for key components (FastAPI, Qdrant, Neon).**
+     - **Briefly mention alternatives considered for major architectural choices and their rationale.**
+     - **Describe the content management workflow, integrating AI tools for Docusaurus content.**
+   - **Constitution Check**: Fill this section by explicitly referencing relevant principles and requirements from the constitution and how the plan adheres to them. Evaluate adherence as a gate.
+   - **Project Structure**: Define the final project directory layout for source code and documentation.
+   - **Complexity Tracking**: Fill if any constitution violations are justified.
+   - Phase 0: Generate `research.md` to resolve all "NEEDS CLARIFICATION" items from Technical Context.
+   - Phase 1: Generate `data-model.md`, `contracts/`, `quickstart.md`.
+   - Phase 1: Update agent context by running the agent script.
+   - Re-evaluate Constitution Check post-design.
 
 4. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
 
