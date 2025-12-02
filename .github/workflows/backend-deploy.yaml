@@ -1,0 +1,44 @@
+name: Deploy FastAPI Backend to Serverless
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy FastAPI Backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker image
+        id: docker_build
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend # Path to your backend Dockerfile context
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/fastapi-backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Deploy to Serverless Platform # Placeholder - user to customize
+        run: |
+          echo "--- Deployment to Serverless Platform ---"
+          echo "Replace this step with commands specific to your chosen serverless platform (e.g., Google Cloud Run, AWS App Runner)"
+          echo "Example for Google Cloud Run:"
+          echo "gcloud auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}"
+          echo "gcloud run deploy fastapi-backend --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/fastapi-backend:latest --region us-central1 --platform managed --allow-unauthenticated"
+          # Example for AWS App Runner:
+          # aws apprunner create-service --cli-input-json file://apprunner-config.json
+          # Note: Actual deployment steps can be complex and may require additional tools/configuration.

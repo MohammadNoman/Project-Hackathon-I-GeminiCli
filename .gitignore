@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+dist/
+build/
+*.log
+.env*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnp/
+.pnp.js
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.Python/
+.mypy_cache/
+.pytest_cache/
+.coverage
+.tox/
+celerybeat-schedule
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Docker
+.dockerignore
+Dockerfile*
+*.log*
+coverage/
+
+# Universal
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*.bak
+*.swo
+.vscode/
+.idea/
