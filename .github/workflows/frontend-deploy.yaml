@@ -1,0 +1,36 @@
+name: Deploy Docusaurus to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master # or gh-pages if preferred for deployment source
+
+jobs:
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Retrieve full history for Docusaurus plugin
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # Use Node.js v20 as recommended in plan.md
+
+      - name: Install Dependencies
+        run: npm install # or yarn install if you prefer yarn
+        working-directory: ./frontend
+
+      - name: Build Docusaurus Website
+        run: npm run build
+        working-directory: ./frontend
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/build # Docusaurus build output directory
+          cname: example.com # Optional: If you have a custom domain

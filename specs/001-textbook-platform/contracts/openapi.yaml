@@ -1,0 +1,212 @@
+openapi: 3.0.0
+info:
+  title: Physical AI & Humanoid Robotics Textbook Platform API
+  version: 1.0.0
+  description: API for the RAG Chatbot and User Management for the interactive textbook platform.
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development server
+  - url: https://your-deployed-api.com/api/v1
+    description: Production API server
+
+paths:
+  /chat/query:
+    post:
+      summary: Send a query to the RAG chatbot
+      operationId: sendChatQuery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                  description: The user's question to the chatbot.
+                context_snippet:
+                  type: string
+                  nullable: true
+                  description: Optional user-selected text snippet for context.
+                chapter_id:
+                  type: string
+                  nullable: true
+                  description: Optional ID of the current chapter for context.
+                user_id:
+                  type: string
+                  nullable: true
+                  description: Optional ID of the authenticated user.
+      responses:
+        '200':
+          description: Chatbot response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_text:
+                    type: string
+                    description: The chatbot's answer.
+                  source_references:
+                    type: array
+                    items:
+                      type: string
+                    description: URLs or IDs of textbook sections referenced.
+                  query_id:
+                    type: string
+                    description: Unique ID of the query.
+        '400':
+          description: Bad Request (e.g., missing text)
+        '500':
+          description: Internal Server Error
+
+  /auth/signup:
+    post:
+      summary: Register a new user
+      operationId: userSignup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User's email address.
+                password:
+                  type: string
+                  format: password
+                  description: User's password.
+                name:
+                  type: string
+                  nullable: true
+                  description: Optional name of the user.
+                software_background:
+                  type: string
+                  nullable: true
+                  description: Optional description of software expertise.
+                hardware_background:
+                  type: string
+                  nullable: true
+                  description: Optional description of hardware/robotics expertise.
+      responses:
+        '200':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    description: Unique ID of the new user.
+                  message:
+                    type: string
+        '400':
+          description: Invalid input
+        '409':
+          description: Email already exists
+        '500':
+          description: Internal Server Error
+
+  /auth/signin:
+    post:
+      summary: Authenticate an existing user
+      operationId: userSignin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User's email address.
+                password:
+                  type: string
+                  format: password
+                  description: User's password.
+      responses:
+        '200':
+          description: User authenticated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    description: Unique ID of the authenticated user.
+                  access_token:
+                    type: string
+                    description: JWT access token.
+                  token_type:
+                    type: string
+                    example: bearer
+        '401':
+          description: Invalid credentials
+        '500':
+          description: Internal Server Error
+
+  /user/{user_id}/profile:
+    put:
+      summary: Update user profile
+      operationId: updateUserProfile
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: string
+          required: true
+          description: Unique ID of the user to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                software_background:
+                  type: string
+                  nullable: true
+                  description: Optional updated description of software expertise.
+                hardware_background:
+                  type: string
+                  nullable: true
+                  description: Optional updated description of hardware/robotics expertise.
+                language_preference:
+                  type: string
+                  nullable: true
+                  description: Optional updated language preference (e.g., 'en', 'ur').
+      responses:
+        '200':
+          description: User profile updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    description: Unique ID of the updated user.
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+        '500':
+          description: Internal Server Error
