@@ -3,7 +3,7 @@ name: Deploy Docusaurus to GitHub Pages
 on:
   push:
     branches:
-      - master # or gh-pages if preferred for deployment source
+      - 001-textbook-platform # Deploy from the current working branch
 
 jobs:
   deploy:
@@ -33,4 +33,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./frontend/build # Docusaurus build output directory
-          cname: example.com # Optional: If you have a custom domain
+          # cname: example.com # Optional: If you have a custom domain (removed)
