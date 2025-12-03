@@ -13,8 +13,8 @@ ENV PYTHONPATH /app
 # Copy the requirements file and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip show python-json-logger
-RUN python -c "import sys; print(sys.path)"
+
+
 
 # Copy the entire backend application code
 COPY . .
@@ -24,4 +24,4 @@ EXPOSE 8000
 
 # Command to run the FastAPI application using Uvicorn
 # Assuming the main application object is 'app' in 'src.main'
-CMD python -m uvicorn src.main:app --host 0.0.0.0 --port 8000
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
