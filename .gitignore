@@ -29,6 +29,7 @@ pip-delete-this-directory.txt
 # Docker
 .dockerignore
 Dockerfile*
+!backend/Dockerfile # Allow Dockerfile in backend directory
 *.log*
 coverage/
 
