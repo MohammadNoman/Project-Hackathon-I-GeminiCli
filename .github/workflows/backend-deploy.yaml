@@ -32,16 +32,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Build and Push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v4
-        with:
-          context: ./backend # Path to your backend Dockerfile context
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/fastapi-backend:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
       - name: Render Deployment Instructions
         run: |
           echo "--- Deployment to Render ---"
