@@ -4,6 +4,9 @@ FROM python:3.9-slim-buster
 # Set the working directory in the container
 WORKDIR /app
 
+# Explicitly add site-packages to PYTHONPATH
+ENV PYTHONPATH=/usr/local/lib/python3.9/site-packages:$PYTHONPATH
+
 # Set PYTHONPATH to include the working directory
 ENV PYTHONPATH /app
 
