@@ -3,7 +3,7 @@ name: Deploy FastAPI Backend to Serverless
 on:
   push:
     branches:
-      - master
+      - 001-textbook-platform
 
 jobs:
   deploy:
