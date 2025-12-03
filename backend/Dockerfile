@@ -10,6 +10,8 @@ ENV PYTHONPATH /app
 # Copy the requirements file and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip show python-json-logger
+RUN python -c "import sys; print(sys.path)"
 
 # Copy the entire backend application code
 COPY . .
