@@ -32,16 +32,15 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Authenticate Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
-
-      - name: Set up gcloud CLI
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-
-      - name: Deploy FastAPI Backend to Cloud Run
+      - name: Render Deployment Instructions
         run: |
-          gcloud run deploy fastapi-backend --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/fastapi-backend:latest --region us-central1 --platform managed --allow-unauthenticated
+          echo "--- Deployment to Render ---"
+          echo "To deploy to Render, you will need to create a new Web Service on Render."
+          echo "1. Go to https://dashboard.render.com/ and create a new Web Service."
+          echo "2. Connect your GitHub repository."
+          echo "3. Choose 'Docker' for the environment and point to your 'backend' directory."
+          echo "4. Render will automatically build and deploy your Dockerfile."
+          echo "   Alternatively, you can connect to your Docker Hub image: ${{ secrets.DOCKER_USERNAME }}/fastapi-backend:latest"
+          echo "5. Configure environment variables (like database credentials, Qdrant API key) directly in Render."
+          echo "6. Ensure your service is set to listen on port 8000, as configured in your Dockerfile."
+          echo "7. Refer to Render's documentation for more details: https://render.com/docs/deploy-docker"

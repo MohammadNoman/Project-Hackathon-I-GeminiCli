@@ -3,14 +3,14 @@ name: Deploy Docusaurus to GitHub Pages
 on:
   push:
     branches:
-      - 001-textbook-platform # Deploy from the current working branch
+      - master # Deploy from the master branch
 
 jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Grant write permission to the GITHUB_TOKEN to push to gh-pages
+      contents: write # Grant write permission to the GITHUB_TOKEN to push to master (or gh-pages if changed)
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -35,4 +35,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./frontend/build # Docusaurus build output directory
+          publish_branch: master # Deploy to the master branch
           # cname: example.com # Optional: If you have a custom domain (removed)
