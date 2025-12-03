@@ -9,6 +9,8 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Grant write permission to the GITHUB_TOKEN to push to gh-pages
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
