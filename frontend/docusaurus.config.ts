@@ -15,15 +15,15 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-domain.com',
+  url: 'https://MohammadNoman.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/textbook-platform/',
+  baseUrl: '/Project-Hackathon-I-GeminiCli/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'your-organization', // Usually your GitHub org/user name.
-  projectName: 'textbook-platform', // Usually your repo name.
+  organizationName: 'MohammadNoman', // Usually your GitHub org/user name.
+  projectName: 'Project-Hackathon-I-GeminiCli', // Usually your repo name.
 
   onBrokenLinks: 'throw',
 
