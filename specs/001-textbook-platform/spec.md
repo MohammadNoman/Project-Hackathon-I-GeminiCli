@@ -99,6 +99,10 @@ As a logged-in student, I want to translate chapter content into Urdu, so that I
 *   **Chatbot Query:** User's question to the chatbot. Attributes: Text, Context (selected snippet, chapter ID).
 *   **Chatbot Response:** Chatbot's answer to a query. Attributes: Text, Source (reference to textbook content).
 
+#### Data Volume Assumptions
+
+*   Estimated total volume of textbook content: 500 pages (approx. 150,000 words).
+
 ## Success Criteria *(mandatory)*
 
 ### Measurable Outcomes
@@ -109,3 +113,30 @@ As a logged-in student, I want to translate chapter content into Urdu, so that I
 *   **SC-004 (Performance):** Chatbot response time for common queries is under 5 seconds during demonstration.
 *   **SC-005 (User Experience):** Users can easily navigate the textbook and interact with the chatbot without significant friction.
 *   **SC-006 (Innovation - Bonus):** Demonstrate at least one of the recommended development practices (e.g., authentication, personalization, localization, advanced AI automation).
+
+### Non-Functional Quality Attributes
+
+*   **Performance:** Chatbot to support 51-200 concurrent users. Chatbot response time for common queries is under 5 seconds during demonstration.
+*   **Scalability:** (To be defined)
+*   **Reliability & Availability:** (To be defined)
+*   **Observability:** Production logging level required: INFO.
+*   **Security & Privacy:** (To be defined)
+*   **Compliance / Regulatory Constraints:** (If any, to be defined)
+
+### Integration & External Dependencies
+
+#### Content Ingestion Method
+
+*   Initial textbook content will be ingested via Markdown files.
+
+---
+
+## Clarifications
+
+### Session 2025-12-04
+
+- Q: How many concurrent users should the chatbot support? → A: 51-200
+- Q: Are there any features explicitly out-of-scope for the MVP? → A: Content editing
+- Q: What is the estimated total volume of textbook content (in pages or words)? → A: 500 pages (approx. 150,000 words)
+- Q: What logging level is required for production (e.g., INFO, DEBUG, ERROR)? → A: INFO
+- Q: How will the initial textbook content be ingested into the system? → A: Markdown files
