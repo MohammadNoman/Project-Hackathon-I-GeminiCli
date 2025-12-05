@@ -1,5 +1,5 @@
 import logging
-from python_json_logger import JsonFormatter
+from pythonjsonlogger import JsonFormatter
 
 from fastapi import FastAPI, Depends, Request, Response, HTTPException, status
 from fastapi.responses import JSONResponse
