@@ -6,6 +6,8 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from .config import settings
 from .database.database import get_db
+from backend.src.models.chat import ChatRequest, ChatResponse
+from backend.src.services.rag_service import get_rag_response
 
 # Configure structured logging
 # Get the root logger
@@ -54,6 +56,21 @@ async def generic_exception_handler(request: Request, exc: Exception):
 async def read_root(db: Session = Depends(get_db)):
     root_logger.info("Root endpoint accessed", extra={"custom_field": "some_value"})
     return {"message": "Welcome to FastAPI Backend!", "openai_key_loaded": bool(settings.OPENAI_API_KEY)}
+
+# Chatbot endpoint
+@app.post("/chat", response_model=ChatResponse)
+async def chat_with_rag(request: ChatRequest):
+    root_logger.info(f"Chat request received: {request.query}", extra={"conversation_id": request.conversation_id})
+    try:
+        # Assuming a default collection name for now. This could be configurable.
+        collection_name = "textbook_content" 
+        response_content, source_chunks = get_rag_response(request.query, collection_name, request.context_snippet)
+        
+        return ChatResponse(response=response_content, source_chunks=source_chunks)
+    except Exception as e:
+        root_logger.error(f"Error in chat endpoint: {e}", exc_info=True)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
 
 # Basic monitoring endpoint placeholder
 @app.get("/metrics")
