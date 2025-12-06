@@ -15,11 +15,8 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://MohammadNoman.github.io',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/Project-Hackathon-I-GeminiCli/',
-
+    url: 'https://physical-ai-textbook.onrender.com', // Replace with your actual Render URL
+    baseUrl: '/',
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'MohammadNoman', // Usually your GitHub org/user name.
