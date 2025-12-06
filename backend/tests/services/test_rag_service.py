@@ -1,5 +1,6 @@
 import pytest
-from backend.src.services.rag_service import build_prompt
+from unittest.mock import patch, MagicMock
+from backend.src.services.rag_service import build_prompt, get_llm_response
 
 def test_build_prompt_without_context():
     """
@@ -48,3 +49,50 @@ def test_build_prompt_long_context_truncation():
     prompt = build_prompt(query, [long_context])
     assert query in prompt
     assert len(prompt) < (len(long_context) + len(query) + 200) # Expect some reduction in total size
+
+@patch('backend.src.services.rag_service.OpenAI')
+def test_get_llm_response_success(mock_openai):
+    """
+    Test that get_llm_response correctly calls the OpenAI API and returns the response.
+    """
+    mock_client_instance = MagicMock()
+    mock_openai.return_value = mock_client_instance
+    mock_client_instance.chat.completions.create.return_value.choices = [
+        MagicMock(message=MagicMock(content="LLM Response"))
+    ]
+
+    prompt_text = "Generated prompt for LLM."
+    response = get_llm_response(prompt_text)
+
+    mock_openai.assert_called_once_with(api_key="mock_openai_api_key")
+    mock_client_instance.chat.completions.create.assert_called_once_with(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": prompt_text}]
+    )
+    assert response == "LLM Response"
+
+@patch('backend.src.services.rag_service.OpenAI')
+def test_get_llm_response_api_failure(mock_openai):
+    """
+    Test that get_llm_response handles OpenAI API failures.
+    """
+    mock_client_instance = MagicMock()
+    mock_openai.return_value = mock_client_instance
+    mock_client_instance.chat.completions.create.side_effect = Exception("OpenAI LLM Error")
+
+    prompt_text = "Generated prompt for LLM."
+    with pytest.raises(Exception, match="OpenAI LLM Error"):
+        get_llm_response(prompt_text)
+
+@patch('backend.src.services.rag_service.OpenAI')
+def test_get_llm_response_no_choices(mock_openai):
+    """
+    Test that get_llm_response handles cases where no choices are returned.
+    """
+    mock_client_instance = MagicMock()
+    mock_openai.return_value = mock_client_instance
+    mock_client_instance.chat.completions.create.return_value.choices = []
+
+    prompt_text = "Generated prompt for LLM."
+    response = get_llm_response(prompt_text)
+    assert response == "No response from LLM."
