@@ -1,5 +1,7 @@
 import pytest
-from tools.embedding_generator import read_markdown_file, chunk_text, generate_embeddings
+from tools.embedding_generator import read_markdown_file, chunk_text, generate_embeddings, upload_embeddings_to_qdrant
+from qdrant_client import QdrantClient, models
+from qdrant_client.http.models import PointStruct
 from unittest.mock import patch, MagicMock
 
 def test_read_markdown_file_exists(tmp_path):
@@ -123,18 +125,75 @@ def test_generate_embeddings_empty_chunks(mock_openai):
     mock_openai.assert_not_called()
     assert embeddings == []
 
-@patch('tools.embedding_generator.OpenAI')
-def test_generate_embeddings_api_failure(mock_openai):
+@patch('tools.embedding_generator.QdrantClient')
+def test_upload_embeddings_to_qdrant_success(mock_qdrant_client):
     """
-    Test that generate_embeddings handles OpenAI API failures (e.g., raises an exception).
+    Test that upload_embeddings_to_qdrant successfully uploads points to Qdrant.
     """
-    mock_client = MagicMock()
-    mock_openai.return_value = mock_client
-    mock_client.embeddings.create.side_effect = Exception("OpenAI API Error")
+    mock_client_instance = MagicMock()
+    mock_qdrant_client.return_value = mock_client_instance
+    mock_client_instance.upsert.return_value = MagicMock(status='completed')
 
-    text_chunks = ["test chunk"]
-    with pytest.raises(Exception, match="OpenAI API Error"):
-        generate_embeddings(text_chunks)
+    embeddings = [[0.1, 0.2, 0.3], [0.4, 0.5, 0.6]]
+    metadatas = [{"id": 1, "text": "chunk1"}, {"id": 2, "text": "chunk2"}]
+    collection_name = "test_collection"
+
+    upload_embeddings_to_qdrant(embeddings, metadatas, collection_name)
+
+    mock_qdrant_client.assert_called_once_with(url="mock_qdrant_url", api_key="mock_qdrant_api_key")
+    mock_client_instance.upsert.assert_called_once_with(
+        collection_name=collection_name,
+        wait=True, # Added wait=True to expectation
+        points=[
+            PointStruct(id=0, vector=[0.1, 0.2, 0.3], payload={"id": 1, "text": "chunk1"}), # Corrected ID and payload
+            PointStruct(id=1, vector=[0.4, 0.5, 0.6], payload={"id": 2, "text": "chunk2"})  # Corrected ID and payload
+        ]
+    )
+
+@patch('tools.embedding_generator.QdrantClient')
+def test_upload_embeddings_to_qdrant_empty_input(mock_qdrant_client):
+    """
+    Test that upload_embeddings_to_qdrant handles empty input gracefully.
+    """
+    mock_client_instance = MagicMock()
+    mock_qdrant_client.return_value = mock_client_instance
+
+    embeddings = []
+    metadatas = []
+    collection_name = "test_collection"
+
+    upload_embeddings_to_qdrant(embeddings, metadatas, collection_name)
+
+    mock_qdrant_client.assert_not_called()
+    mock_client_instance.upsert.assert_not_called()
+
+@patch('tools.embedding_generator.QdrantClient')
+def test_upload_embeddings_to_qdrant_mismatched_lengths(mock_qdrant_client):
+    """
+    Test that upload_embeddings_to_qdrant raises ValueError for mismatched input lengths.
+    """
+    embeddings = [[0.1, 0.2, 0.3]]
+    metadatas = [{"id": 1, "text": "chunk1"}, {"id": 2, "text": "chunk2"}] # Mismatched
+
+    with pytest.raises(ValueError, match="Embeddings and metadatas lists must have the same length."):
+        upload_embeddings_to_qdrant(embeddings, metadatas, "test_collection")
+
+@patch('tools.embedding_generator.QdrantClient')
+def test_upload_embeddings_to_qdrant_api_failure(mock_qdrant_client):
+    """
+    Test that upload_embeddings_to_qdrant handles Qdrant API failures.
+    """
+    mock_client_instance = MagicMock()
+    mock_qdrant_client.return_value = mock_client_instance
+    mock_client_instance.upsert.side_effect = Exception("Qdrant API Error")
+
+    embeddings = [[0.1, 0.2, 0.3]]
+    metadatas = [{"id": 1, "text": "chunk1"}]
+    collection_name = "test_collection"
+
+    with pytest.raises(Exception, match="Qdrant API Error"):
+        upload_embeddings_to_qdrant(embeddings, metadatas, collection_name)
+
 
 
 

@@ -1,5 +1,7 @@
 import os
 from openai import OpenAI
+from qdrant_client import QdrantClient, models
+from qdrant_client.http.models import PointStruct
 
 def read_markdown_file(file_path: str) -> str:
     """
@@ -63,4 +65,50 @@ def generate_embeddings(text_chunks: list[str]) -> list[list[float]]:
         return embeddings
     except Exception as e:
         print(f"Error generating embeddings: {e}")
+        raise
+
+def upload_embeddings_to_qdrant(
+    embeddings: list[list[float]], metadatas: list[dict], collection_name: str
+):
+    """
+    Uploads generated embeddings and their metadata to Qdrant.
+    """
+    if len(embeddings) != len(metadatas):
+        raise ValueError("Embeddings and metadatas lists must have the same length.")
+
+    if not embeddings:
+        return # Nothing to upload
+
+    qdrant_url = os.environ.get("QDRANT_URL", "mock_qdrant_url")
+    qdrant_api_key = os.environ.get("QDRANT_API_KEY", "mock_qdrant_api_key")
+
+    client = QdrantClient(url=qdrant_url, api_key=qdrant_api_key)
+
+    points = []
+    for i, emb in enumerate(embeddings):
+        points.append(
+            PointStruct(
+                id=i,  # Assigning a simple incrementing ID for now.
+                vector=emb,
+                payload=metadatas[i]
+            )
+        )
+
+    try:
+        # Create collection if it does not exist (assuming a vector size, will need to be dynamic later)
+        if not client.collection_exists(collection_name=collection_name):
+            client.create_collection(
+                collection_name=collection_name,
+                vectors_config=models.VectorParams(size=len(embeddings[0]), distance=models.Distance.COSINE),
+            )
+            print(f"Collection '{collection_name}' created.")
+
+        operation_info = client.upsert(
+            collection_name=collection_name,
+            wait=True,
+            points=points,
+        )
+        print(f"Upsert operation status: {operation_info.status}")
+    except Exception as e:
+        print(f"Error uploading embeddings to Qdrant: {e}")
         raise
