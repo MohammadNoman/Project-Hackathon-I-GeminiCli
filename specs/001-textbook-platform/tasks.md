@@ -104,30 +104,30 @@
 ### Detailed Task Plan for User Story 2 (RAG Chatbot)
 
 #### Part 1: Data Ingestion Pipeline
-*   [ ] T030 [P] [US2] Test: Write test for Markdown file reader in `tools/embedding_generator.py`.
-*   [ ] T031 [P] [US2] Implement: Markdown file reader to load content from `frontend/docs/` in `tools/embedding_generator.py`.
-*   [ ] T032 [P] [US2] Test: Write test for text chunking logic in `tools/embedding_generator.py`.
-*   [ ] T033 [P] [US2] Implement: Text chunking logic (e.g., recursive character splitter) in `tools/embedding_generator.py`.
-*   [ ] T034 [P] [US2] Test: Write test for embedding generation (mocking OpenAI API) in `tools/embedding_generator.py`.
-*   [ ] T035 [P] [US2] Implement: Embedding generation using OpenAI client in `tools/embedding_generator.py`.
-*   [ ] T036 [P] [US2] Test: Write test for batch uploading to Qdrant (mocking Qdrant client) in `tools/embedding_generator.py`.
-*   [ ] T037 [P] [US2] Implement: Batch upload of vectors and metadata to Qdrant in `tools/embedding_generator.py`.
-*   [ ] T038 [US2] Execute: Run the completed `tools/embedding_generator.py` script to populate the Qdrant collection.
+*   [x] T030 [P] [US2] Test: Write test for Markdown file reader in `tools/embedding_generator.py`.
+*   [x] T031 [P] [US2] Implement: Markdown file reader to load content from `frontend/docs/` in `tools/embedding_generator.py`.
+*   [x] T032 [P] [US2] Test: Write test for text chunking logic in `tools/embedding_generator.py`.
+*   [x] T033 [P] [US2] Implement: Text chunking logic (e.g., recursive character splitter) in `tools/embedding_generator.py`.
+*   [x] T034 [P] [US2] Test: Write test for embedding generation (mocking OpenAI API) in `tools/embedding_generator.py`.
+*   [x] T035 [P] [US2] Implement: Embedding generation using OpenAI client in `tools/embedding_generator.py`.
+*   [x] T036 [P] [US2] Test: Write test for batch uploading to Qdrant (mocking Qdrant client) in `tools/embedding_generator.py`.
+*   [x] T037 [P] [US2] Implement: Batch upload of vectors and metadata to Qdrant in `tools/embedding_generator.py`.
+*   [x] T038 [US2] Execute: Run the completed `tools/embedding_generator.py` script to populate the Qdrant collection.
 
 #### Part 2: Backend Implementation (FastAPI)
-*   [ ] T039 [P] [US2] Test: Create Pydantic models for chat request/response and write validation tests in `backend/tests/api/test_chat_api.py`.
-*   [ ] T040 [P] [US2] Implement: Pydantic models for the chat API in `backend/src/models/chat.py`.
-*   [ ] T041 [P] [US2] Test: Write failing unit test for Qdrant search functionality in `backend/tests/services/test_qdrant_service.py`.
-*   [ ] T042 [P] [US2] Implement: Qdrant search service to retrieve document chunks in `backend/src/services/qdrant_service.py`.
-*   [ ] T043 [P] [US2] Test: Write failing unit test for prompt construction in `backend/tests/services/test_rag_service.py`.
-*   [ ] T044 [P] [US2] Implement: Prompt construction logic in `backend/src/services/rag_service.py` that incorporates retrieved context and user query.
-*   [ ] T045 [P] [US2] Test: Write failing unit test for calling the OpenAI API with the constructed prompt (mocking the API call) in `backend/tests/services/test_rag_service.py`.
-*   [ ] T046 [P] [US2] Implement: Core RAG logic in `backend/src/services/rag_service.py` to call the language model and get a response.
-*   [ ] T047 [US2] Test: Write failing integration test for the `/chat` endpoint in `backend/tests/api/test_chat_api.py`.
-*   [ ] T048 [US2] Implement: The `/chat` streaming endpoint in `backend/src/api/chat.py`, orchestrating calls to the RAG service.
+*   [x] T039 [P] [US2] Test: Create Pydantic models for chat request/response and write validation tests in `backend/tests/api/test_chat_api.py`.
+*   [x] T040 [P] [US2] Implement: Pydantic models for the chat API in `backend/src/models/chat.py`.
+*   [x] T041 [P] [US2] Test: Write failing unit test for Qdrant search functionality in `backend/tests/services/test_qdrant_service.py`.
+*   [x] T042 [P] [US2] Implement: Qdrant search service to retrieve document chunks in `backend/src/services/qdrant_service.py`.
+*   [x] T043 [P] [US2] Test: Write failing unit test for prompt construction in `backend/tests/services/test_rag_service.py`.
+*   [x] T044 [P] [US2] Implement: Prompt construction logic in `backend/src/services/rag_service.py` that incorporates retrieved context and user query.
+*   [x] T045 [P] [US2] Test: Write failing unit test for calling the OpenAI API with the constructed prompt (mocking the API call) in `backend/tests/services/test_rag_service.py`.
+*   [x] T046 [P] [US2] Implement: Core RAG logic in `backend/src/services/rag_service.py` to call the language model and get a response.
+*   [x] T047 [US2] Test: Write failing integration test for the `/chat` endpoint in `backend/tests/api/test_chat_api.py`.
+*   [x] T048 [US2] Implement: The `/chat` streaming endpoint in `backend/src/api/chat.py`, orchestrating calls to the RAG service.
 
 #### Part 3: Frontend Implementation (React)
-*   [ ] T049 [P] [US2] Test: Create basic Jest snapshot test for the Chatbot UI component in `frontend/src/components/Chatbot/index.test.tsx`.
+*   [x] T049 [P] [US2] Test: Create basic Jest snapshot test for the Chatbot UI component in `frontend/src/components/Chatbot/index.test.tsx`.
 *   [ ] T050 [P] [US2] Implement: Basic UI structure for the chatbot window (message list, input box, send button) in `frontend/src/components/Chatbot/index.tsx`.
 *   [ ] T051 [P] [US2] Test: Write tests for chat state management (adding messages, handling input) using React Testing Library.
 *   [ ] T052 [P] [US2] Implement: State management for the chat component using React hooks in `frontend/src/components/Chatbot/index.tsx`.

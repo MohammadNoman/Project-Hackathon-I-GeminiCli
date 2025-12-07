@@ -112,3 +112,46 @@ def upload_embeddings_to_qdrant(
     except Exception as e:
         print(f"Error uploading embeddings to Qdrant: {e}")
         raise
+
+
+if __name__ == "__main__":
+    from dotenv import load_dotenv # Import load_dotenv here
+
+    load_dotenv() # Load environment variables from .env file
+
+    COLLECTION_NAME = "textbook_content"
+    CHUNK_SIZE = 500
+    CHUNK_OVERLAP = 100
+
+    # Example usage: Process a dummy Markdown file
+    # In a real scenario, you would loop through all your markdown files.
+    dummy_md_path = "frontend/docs/chapter1-introduction.md" # Assuming this file exists
+
+    if not os.path.exists(dummy_md_path):
+        print(f"Error: Dummy Markdown file not found at {dummy_md_path}. Please create one or adjust path.")
+    else:
+        print(f"Processing {dummy_md_path}...")
+        try:
+            content = read_markdown_file(dummy_md_path)
+            chunks = chunk_text(content, CHUNK_SIZE, CHUNK_OVERLAP)
+            
+            # Create metadatas for each chunk
+            metadatas = []
+            for i, chunk in enumerate(chunks):
+                metadatas.append({
+                    "text": chunk,
+                    "source": dummy_md_path,
+                    "chunk_id": i
+                })
+
+            embeddings = generate_embeddings(chunks)
+            
+            # Ensure the vector size is correct for Qdrant (all embeddings have same dim)
+            if embeddings and len(embeddings[0]) != len(embeddings[-1]): # Simple check
+                raise ValueError("Embeddings have inconsistent dimensions.")
+
+            upload_embeddings_to_qdrant(embeddings, metadatas, COLLECTION_NAME)
+            print(f"Successfully processed and uploaded embeddings for {dummy_md_path}")
+
+        except Exception as e:
+            print(f"An error occurred during processing: {e}")
