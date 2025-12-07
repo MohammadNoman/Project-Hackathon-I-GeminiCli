@@ -101,26 +101,41 @@
 
 **Independent Test**: Query the chatbot and verify accuracy/relevance of responses, including snippet-based queries.
 
-### Tests for User Story 2 (TDD)
+### Detailed Task Plan for User Story 2 (RAG Chatbot)
 
-- [ ] T030 [P] [US2] Unit test: FastAPI chat endpoint validation (`backend/tests/api/test_chat_api.py`)
-- [ ] T031 [P] [US2] Unit test: Qdrant client connection and search (`backend/tests/services/test_qdrant_service.py`)
-- [ ] T032 [P] [US2] Unit test: OpenAI LLM interaction (`backend/tests/services/test_openai_service.py`)
-- [ ] T033 [P] [US2] Unit test: RAG logic (content retrieval and response generation) (`backend/tests/services/test_rag_logic.py`)
-- [ ] T034 [US2] Integration test: Full chat API flow (`backend/tests/integration/test_chat_flow.py`)
-- [ ] T035 [US2] E2E test: Frontend chatbot UI sends queries and displays responses correctly (`frontend/tests/e2e/test_chatbot_interaction.test.js`)
+#### Part 1: Data Ingestion Pipeline
+*   [x] T030 [P] [US2] Test: Write test for Markdown file reader in `tools/embedding_generator.py`.
+*   [x] T031 [P] [US2] Implement: Markdown file reader to load content from `frontend/docs/` in `tools/embedding_generator.py`.
+*   [x] T032 [P] [US2] Test: Write test for text chunking logic in `tools/embedding_generator.py`.
+*   [x] T033 [P] [US2] Implement: Text chunking logic (e.g., recursive character splitter) in `tools/embedding_generator.py`.
+*   [x] T034 [P] [US2] Test: Write test for embedding generation (mocking OpenAI API) in `tools/embedding_generator.py`.
+*   [x] T035 [P] [US2] Implement: Embedding generation using OpenAI client in `tools/embedding_generator.py`.
+*   [x] T036 [P] [US2] Test: Write test for batch uploading to Qdrant (mocking Qdrant client) in `tools/embedding_generator.py`.
+*   [x] T037 [P] [US2] Implement: Batch upload of vectors and metadata to Qdrant in `tools/embedding_generator.py`.
+*   [x] T038 [US2] Execute: Run the completed `tools/embedding_generator.py` script to populate the Qdrant collection.
 
-### Implementation for User Story 2
+#### Part 2: Backend Implementation (FastAPI)
+*   [x] T039 [P] [US2] Test: Create Pydantic models for chat request/response and write validation tests in `backend/tests/api/test_chat_api.py`.
+*   [x] T040 [P] [US2] Implement: Pydantic models for the chat API in `backend/src/models/chat.py`.
+*   [x] T041 [P] [US2] Test: Write failing unit test for Qdrant search functionality in `backend/tests/services/test_qdrant_service.py`.
+*   [x] T042 [P] [US2] Implement: Qdrant search service to retrieve document chunks in `backend/src/services/qdrant_service.py`.
+*   [x] T043 [P] [US2] Test: Write failing unit test for prompt construction in `backend/tests/services/test_rag_service.py`.
+*   [x] T044 [P] [US2] Implement: Prompt construction logic in `backend/src/services/rag_service.py` that incorporates retrieved context and user query.
+*   [x] T045 [P] [US2] Test: Write failing unit test for calling the OpenAI API with the constructed prompt (mocking the API call) in `backend/tests/services/test_rag_service.py`.
+*   [x] T046 [P] [US2] Implement: Core RAG logic in `backend/src/services/rag_service.py` to call the language model and get a response.
+*   [x] T047 [US2] Test: Write failing integration test for the `/chat` endpoint in `backend/tests/api/test_chat_api.py`.
+*   [x] T048 [US2] Implement: The `/chat` streaming endpoint in `backend/src/api/chat.py`, orchestrating calls to the RAG service.
 
-- [ ] T036 [P] [US2] Implement FastAPI endpoint `/chat/query` in `backend/src/api/chat.py`
-- [ ] T037 [P] [US2] Develop Qdrant service for vector search in `backend/src/services/qdrant_service.py`
-- [ ] T038 [P] [US2] Develop OpenAI service for LLM interaction in `backend/src/services/openai_service.py`
-- [ ] T039 [US2] Implement core RAG logic in `backend/src/services/rag_service.py` (orchestrates Qdrant and OpenAI)
-- [ ] T040 [US2] Create Docusaurus React component for chatbot UI in `frontend/src/components/Chatbot/`
-- [ ] T041 [US2] Integrate chatbot component into Docusaurus layout (`frontend/src/theme/Layout/index.js`)
-- [ ] T042 [US2] Develop script for content embedding generation and Qdrant upload in `tools/embedding_generator.py` (CLI automation)
-- [ ] T043 [US2] Generate initial content embeddings and upload to Qdrant
-- [ ] T044 [US2] Trigger backend CI/CD for initial deployment
+#### Part 3: Frontend Implementation (React)
+*   [x] T049 [P] [US2] Test: Create basic Jest snapshot test for the Chatbot UI component in `frontend/src/components/Chatbot/index.test.tsx`.
+*   [ ] T050 [P] [US2] Implement: Basic UI structure for the chatbot window (message list, input box, send button) in `frontend/src/components/Chatbot/index.tsx`.
+*   [ ] T051 [P] [US2] Test: Write tests for chat state management (adding messages, handling input) using React Testing Library.
+*   [ ] T052 [P] [US2] Implement: State management for the chat component using React hooks in `frontend/src/components/Chatbot/index.tsx`.
+*   [ ] T053 [P] [US2] Test: Write test for the API client service (mocking `fetch`) to call the backend in `frontend/src/services/api.test.ts`.
+*   [ ] T054 [P] [US2] Implement: API client function in `frontend/src/services/api.ts` to send queries to the `/chat` endpoint.
+*   [ ] T055 [US2] Implement: Logic in the Chatbot component to call the API service and display the streaming response.
+*   [ ] T056 [US2] Integrate: Add the Chatbot component to the main Docusaurus layout in `frontend/src/theme/Layout/index.js` so it appears on all pages.
+*   [ ] T057 [US2] E2E Test: Write a Playwright/Cypress test to simulate a user typing a question and receiving an answer in `frontend/tests/e2e/test_chatbot_interaction.test.js`.
 
 **Checkpoint**: User Story 2 should be fully functional and testable independently
 
