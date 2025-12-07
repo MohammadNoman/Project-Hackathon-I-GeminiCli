@@ -1,0 +1,37 @@
+services:
+  # BACKEND SERVICE
+  - type: web
+    name: textbook-platform-backend
+    env: python
+    region: ohio
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn src.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 30
+      # YOU MUST ADD THESE IN RENDER DASHBOARD:
+      # - OPENAI_API_KEY
+      # - QDRANT_HOST
+      # - QDRANT_API_KEY
+      # - NEON_DATABASE_URL
+
+  # FRONTEND SERVICE
+  - type: web
+    name: textbook-platform-frontend
+    env: static
+    region: ohio
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./build
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0

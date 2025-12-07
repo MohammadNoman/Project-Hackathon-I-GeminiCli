@@ -3,11 +3,30 @@ from pythonjsonlogger.jsonlogger import JsonFormatter
 
 from fastapi import FastAPI, Depends, Request, Response, HTTPException, status
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from .config import settings
 from .database.database import get_db
 from backend.src.models.chat import ChatRequest, ChatResponse
 from backend.src.services.rag_service import get_rag_response
+from backend.src.api import auth, personalization, localization
+
+# ... (Logging setup) ...
+
+# ... (App setup) ...
+
+# Include Routers
+app.include_router(auth.router)
+app.include_router(personalization.router)
+app.include_router(localization.router)
+
+# ... (Logging setup) ...
+
+# ... (App setup) ...
+
+# Include Routers
+app.include_router(auth.router)
+app.include_router(personalization.router)
 
 # Configure structured logging
 # Get the root logger
@@ -33,6 +52,23 @@ root_logger.addHandler(handler)
 # For now, this ensures application-level logs are structured.
 
 app = FastAPI()
+
+# Configure CORS
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include Routers
+app.include_router(auth.router)
 
 # Global Exception Handler
 @app.exception_handler(HTTPException)
