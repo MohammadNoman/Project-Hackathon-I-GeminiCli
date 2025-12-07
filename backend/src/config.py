@@ -8,6 +8,11 @@ class Settings(BaseSettings):
 
     # Database Connection
     NEON_DATABASE_URL: str
+    
+    # Auth
+    SECRET_KEY: str = "your-secret-key-keep-it-secret"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     model_config = SettingsConfigDict(env_file='.env', extra='ignore')
 

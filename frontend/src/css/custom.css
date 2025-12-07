@@ -1,30 +1,182 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * Premium Physical AI & Robotics Theme
+ * Aesthetic: Futuristic, Clean, Glassmorphism
  */
 
-/* You can override the default Infima variables here. */
+/* Imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
 :root {
-  --ifm-color-primary: #34495e; /* Darker blue-grey */
-  --ifm-color-primary-dark: #2c3e50;
-  --ifm-color-primary-darker: #26364a;
-  --ifm-color-primary-darkest: #1f2a3a;
-  --ifm-color-primary-light: #415a72;
-  --ifm-color-primary-lighter: #4c6880;
-  --ifm-color-primary-lightest: #5c799a;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* Brand Colors - Indigo/Violet Gradient Theme */
+  --ifm-color-primary: #6366f1;
+  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-darker: #4338ca;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #a5b4fc;
+  --ifm-color-primary-lightest: #c7d2fe;
+
+  /* Typography */
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --ifm-heading-font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  --ifm-font-size-base: 17px;
+
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+
+  /* Layout */
+  --ifm-navbar-height: 4.5rem;
+  --ifm-container-width-xl: 1280px;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #78909c; /* Lighter blue-grey for dark mode */
-  --ifm-color-primary-dark: #607d8b;
-  --ifm-color-primary-darker: #546e7a;
-  --ifm-color-primary-darkest: #455a64;
-  --ifm-color-primary-light: #90a4ae;
-  --ifm-color-primary-lighter: #a7b7c2;
-  --ifm-color-primary-lightest: #cfd8dc;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #818cf8;
+  --ifm-color-primary-dark: #6366f1;
+  --ifm-color-primary-darker: #4f46e5;
+  --ifm-color-primary-darkest: #4338ca;
+  --ifm-color-primary-light: #a5b4fc;
+  --ifm-color-primary-lighter: #c7d2fe;
+  --ifm-color-primary-lightest: #e0e7ff;
+
+  --ifm-background-color: #0f172a;
+  --ifm-background-surface-color: #1e293b;
+
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Global Aesthetics */
+body {
+  background-image: radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Navbar Premium Glass Effect */
+.navbar {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.navbar__item {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Premium Buttons */
+.button--primary {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+}
+
+.button--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.23);
+  background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%) !important;
+}
+
+.button--secondary {
+  background: white;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+}
+
+[data-theme='dark'] .button--secondary {
+  background: #1e293b;
+  color: white;
+  border: 1px solid #334155;
+}
+
+/* Cards & Content Blocks */
+.card,
+.markdown>h2,
+.markdown>h3 {
+  position: relative;
+}
+
+.markdown blockquote {
+  background: rgba(99, 102, 241, 0.1);
+  border-left: 4px solid #6366f1;
+  border-radius: 0 8px 8px 0;
+  color: inherit;
+  padding: 1rem 1.5rem;
+}
+
+/* Hero Section Styles (Used in index.tsx) */
+.hero-banner {
+  padding: 6rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to right, #6366f1, #a855f7, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 8s linear infinite;
+  background-size: 200% auto;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+html[data-theme='dark'] .hero-title {
+  background: linear-gradient(to right, #818cf8, #c084fc, #f472b6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+[data-theme='dark'] .hero-subtitle {
+  color: #94a3b8;
+}
+
+/* Header Signup Button Special Style */
+.header-signup-button {
+  background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%) !important;
+  /* Green/Blue distinct from primary */
+  color: white !important;
+  font-weight: 700 !important;
+  border-radius: 50px !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+.header-signup-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4) !important;
 }

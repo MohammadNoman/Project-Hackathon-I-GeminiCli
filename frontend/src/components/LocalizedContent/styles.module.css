@@ -1,0 +1,123 @@
+/* Glassmorphism Localization Card */
+
+.container {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-right: 4px solid #10b981;
+    /* Green accent for Localization */
+}
+
+:global(html[data-theme='dark']) .container {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 4px solid #10b981;
+}
+
+.container:hover {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+:global(html[data-theme='dark']) .container:hover {
+    background: rgba(30, 41, 59, 0.8);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #10b981;
+    /* Green title */
+    margin: 0;
+}
+
+.controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.select {
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: white;
+    font-size: 0.85rem;
+}
+
+:global(html[data-theme='dark']) .select {
+    background: #1e293b;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    background: #10b981;
+    color: white;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.button:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+.button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.content {
+    font-size: 1.1rem;
+    /* Slightly larger for non-latin scripts */
+    line-height: 1.8;
+    color: #334155;
+    padding: 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+:global(html[data-theme='dark']) .content {
+    color: #e2e8f0;
+    background: rgba(15, 23, 42, 0.6);
+}
+
+.original {
+    color: #64748b;
+}
+
+:global(html[data-theme='dark']) .original {
+    color: #94a3b8;
+}
+
+.rtl {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Noto Nastaliq Urdu', 'Arial', sans-serif;
+    /* Example font */
+}

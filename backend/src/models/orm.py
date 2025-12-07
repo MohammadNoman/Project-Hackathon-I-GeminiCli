@@ -12,3 +12,4 @@ class Student(Base):
     software_background = Column(String)
     hardware_background = Column(String)
     language_preference = Column(String)
+    hashed_password = Column(String)

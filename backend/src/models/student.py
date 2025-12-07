@@ -11,6 +11,7 @@ class StudentBase(BaseModel):
 
 class StudentCreate(StudentBase):
     email: str # Email is mandatory for creation
+    password: str # Password for auth
 
 class StudentUpdate(StudentBase):
     pass # All fields optional for update

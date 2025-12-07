@@ -1,5 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -15,8 +15,8 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-    url: 'https://physical-ai-textbook.onrender.com', // Replace with your actual Render URL
-    baseUrl: '/',
+  url: 'https://physical-ai-textbook.onrender.com', // Replace with your actual Render URL
+  baseUrl: '/',
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'MohammadNoman', // Usually your GitHub org/user name.
@@ -84,11 +84,19 @@ const config: Config = {
           position: 'left',
           label: 'Textbook',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/your-organization/textbook-platform',
           label: 'GitHub',
           position: 'right',
+        },
+        { to: '/login', label: 'Sign In', position: 'right' },
+        {
+          to: '/signup',
+          label: 'Sign Up',
+          position: 'right',
+          className: 'button button--primary button--sm header-signup-button',
+          style: { marginTop: '0.5rem' }
         },
       ],
     },

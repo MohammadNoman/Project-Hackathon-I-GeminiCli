@@ -128,13 +128,13 @@
 
 #### Part 3: Frontend Implementation (React)
 *   [x] T049 [P] [US2] Test: Create basic Jest snapshot test for the Chatbot UI component in `frontend/src/components/Chatbot/index.test.tsx`.
-*   [ ] T050 [P] [US2] Implement: Basic UI structure for the chatbot window (message list, input box, send button) in `frontend/src/components/Chatbot/index.tsx`.
-*   [ ] T051 [P] [US2] Test: Write tests for chat state management (adding messages, handling input) using React Testing Library.
-*   [ ] T052 [P] [US2] Implement: State management for the chat component using React hooks in `frontend/src/components/Chatbot/index.tsx`.
-*   [ ] T053 [P] [US2] Test: Write test for the API client service (mocking `fetch`) to call the backend in `frontend/src/services/api.test.ts`.
-*   [ ] T054 [P] [US2] Implement: API client function in `frontend/src/services/api.ts` to send queries to the `/chat` endpoint.
-*   [ ] T055 [US2] Implement: Logic in the Chatbot component to call the API service and display the streaming response.
-*   [ ] T056 [US2] Integrate: Add the Chatbot component to the main Docusaurus layout in `frontend/src/theme/Layout/index.js` so it appears on all pages.
+*  - [x] T050 [P] [US2] Implement: Basic UI structure for the chatbot window (message list, input box, send button) in `frontend/src/components/Chatbot/index.tsx`.
+- [ ] T051 [P] [US2] Test: Write tests for chat state management (adding messages, handling input) using React Testing Library.
+- [x] T052 [P] [US2] Implement: State management for the chat component using React hooks in `frontend/src/components/Chatbot/index.tsx`.
+- [ ] T053 [P] [US2] Test: Write test for the API client service (mocking `fetch`) to call the backend in `frontend/src/services/api.test.ts`.
+- [x] T054 [P] [US2] Implement: API client function in `frontend/src/services/api.ts` to send queries to the `/chat` endpoint.
+- [x] T055 [US2] Implement: Logic in the Chatbot component to call the API service and display the streaming response.
+- [x] T056 [US2] Integrate: Add the Chatbot component to the main Docusaurus layout in `frontend/src/theme/Layout/index.js` so it appears on all pages.
 *   [ ] T057 [US2] E2E Test: Write a Playwright/Cypress test to simulate a user typing a question and receiving an answer in `frontend/tests/e2e/test_chatbot_interaction.test.js`.
 
 **Checkpoint**: User Story 2 should be fully functional and testable independently
@@ -149,20 +149,20 @@
 
 ### Tests for User Story 3 (TDD)
 
-- [ ] T045 [P] [US3] Unit test: `better-auth.com` integration (mocking external service) (`backend/tests/services/test_auth_service.py`)
-- [ ] T046 [P] [US3] Unit test: User profile update logic (`backend/tests/services/test_user_service.py`)
-- [ ] T047 [P] [US3] Unit test: Content personalization logic (`backend/tests/services/test_personalization_service.py`)
-- [ ] T048 [US3] Integration test: Full user signup/signin flow (`backend/tests/integration/test_auth_flow.py`)
-- [ ] T049 [US3] E2E test: User can sign up, log in, update profile, and see personalized content (`frontend/tests/e2e/test_personalization.test.js`)
+- [ ] T058 [P] [US3] Unit test: `better-auth.com` integration (mocking external service) (`backend/tests/services/test_auth_service.py`)
+- [ ] T059 [P] [US3] Unit test: User profile update logic (`backend/tests/services/test_user_service.py`)
+- [ ] T060 [P] [US3] Unit test: Content personalization logic (`backend/tests/services/test_personalization_service.py`)
+- [ ] T061 [US3] Integration test: Full user signup/signin flow (`backend/tests/integration/test_auth_flow.py`)
+- [ ] T062 [US3] E2E test: User can sign up, log in, update profile, and see personalized content (`frontend/tests/e2e/test_personalization.test.js`)
 
 ### Implementation for User Story 3
 
-- [ ] T050 [P] [US3] Implement FastAPI endpoints for `/auth/signup` and `/auth/signin` in `backend/src/api/auth.py`
-- [ ] T051 [P] [US3] Integrate `better-auth.com` for user management in `backend/src/services/auth_service.py`
-- [ ] T052 [P] [US3] Implement user profile update endpoint `/user/{user_id}/profile` in `backend/src/api/user.py`
-- [ ] T053 [US3] Develop content personalization logic in `backend/src/services/personalization_service.py`
-- [ ] T054 [US3] Create Docusaurus UI components for Signup, Signin, and Profile management (`frontend/src/components/Auth/`)
-- [ ] T055 [US3] Implement logic to dynamically adapt chapter content based on user preferences in `frontend/src/theme/Layout/index.js` or specific content components.
+- [x] T063 [P] [US3] Implement FastAPI endpoints for `/auth/signup` and `/auth/signin` in `backend/src/api/auth.py`
+- [x] T064 [P] [US3] Integrate `better-auth.com` for user management in `backend/src/services/auth_service.py`
+- [ ] T065 [P] [US3] Implement user profile update endpoint `/user/{user_id}/profile` in `backend/src/api/user.py`
+- [x] T066 [US3] Develop content personalization logic in `backend/src/services/personalization_service.py`
+- [x] T067 [US3] Create Docusaurus UI components for Signup, Signin, and Profile management (`frontend/src/components/Auth/`)
+- [x] T068 [US3] Implement logic to dynamically adapt chapter content based on user preferences in `frontend/src/theme/Layout/index.js` or specific content components.
 
 **Checkpoint**: User Story 3 should be fully functional and testable independently
 
@@ -176,16 +176,16 @@
 
 ### Tests for User Story 4 (TDD)
 
-- [ ] T056 [P] [US4] Unit test: Localization service logic (`backend/tests/services/test_localization_service.py`)
-- [ ] T057 [P] [US4] Integration test: Localization API endpoint (`backend/tests/integration/test_localization_api.py`)
-- [ ] T058 [US4] E2E test: User can select Urdu and content is translated correctly (`frontend/tests/e2e/test_localization.test.js`)
+- [ ] T069 [P] [US4] Unit test: Localization service logic (`backend/tests/services/test_localization_service.py`)
+- [ ] T070 [P] [US4] Integration test: Localization API endpoint (`backend/tests/integration/test_localization_api.py`)
+- [ ] T071 [US4] E2E test: User can select Urdu and content is translated correctly (`frontend/tests/e2e/test_localization.test.js`)
 
 ### Implementation for User Story 4
 
-- [ ] T059 [P] [US4] Implement FastAPI endpoint for content translation `/translate/{chapter_id}` in `backend/src/api/localization.py`
-- [ ] T060 [P] [US4] Develop localization service in `backend/src/services/localization_service.py` (e.g., using an LLM for translation)
-- [ ] T061 [US4] Create Docusaurus UI component for language selection (`frontend/src/components/Localization/`)
-- [ ] T062 [US4] Implement logic to display translated content in Docusaurus.
+- [x] T072 [P] [US4] Implement FastAPI endpoint for content translation `/translate/{chapter_id}` in `backend/src/api/localization.py`
+- [x] T073 [P] [US4] Develop localization service in `backend/src/services/localization_service.py` (e.g., using an LLM for translation)
+- [x] T074 [US4] Create Docusaurus UI component for language selection (`frontend/src/components/Localization/`)
+- [x] T075 [US4] Implement logic to display translated content in Docusaurus.
 
 **Checkpoint**: User Story 4 should be fully functional and testable independently
 
@@ -197,32 +197,32 @@
 
 ### Documentation & Traceability
 
-- [ ] T063 [P] Review and update project `README.md` with setup, run, and deployment instructions.
-- [ ] T064 [P] Generate/update OpenAPI specification documentation in `docs/api/` (CLI automation).
-- [ ] T065 [P] Document API key management procedures and secure storage guidelines.
-- [ ] T066 [P] Update `quickstart.md` with any refined steps.
+- [x] T076 [P] Review and update project `README.md` with setup, run, and deployment instructions.
+- [ ] T077 [P] Generate/update OpenAPI specification documentation in `docs/api/` (CLI automation).
+- [ ] T078 [P] Document API key management procedures and secure storage guidelines.
+- [ ] T079 [P] Update `quickstart.md` with any refined steps.
 
 ### Security Hardening
 
-- [ ] T067 Conduct a basic security review of API endpoints and data handling.
-- [ ] T068 Implement helmet-like security headers for FastAPI response.
-- [ ] T069 Configure CORS policies for FastAPI backend.
+- [ ] T080 Conduct a basic security review of API endpoints and data handling.
+- [ ] T081 Implement helmet-like security headers for FastAPI response.
+- [ ] T082 Configure CORS policies for FastAPI backend.
 
 ### Observability & Monitoring
 
-- [ ] T070 Setup basic dashboard for API performance and error rates in chosen cloud monitoring tool.
-- [ ] T071 Configure alerts for critical errors or performance degradation.
-- [ ] T072 Implement tracing for key API calls (e.g., using OpenTelemetry if time permits).
+- [ ] T083 Setup basic dashboard for API performance and error rates in chosen cloud monitoring tool.
+- [ ] T084 Configure alerts for critical errors or performance degradation.
+- [ ] T085 Implement tracing for key API calls (e.g., using OpenTelemetry if time permits).
 
 ### Performance Optimization
 
-- [ ] T073 Review critical API endpoints for performance bottlenecks.
-- [ ] T074 Implement caching for frequently accessed data (e.g., textbook content, RAG results).
+- [ ] T086 Review critical API endpoints for performance bottlenecks.
+- [ ] T087 Implement caching for frequently accessed data (e.g., textbook content, RAG results).
 
 ### AI Content Generation Workflow Automation
 
-- [ ] T075 Develop CLI tool/script to automate content generation using Spec-Kit Plus and Claude Code (`tools/content_automator.py`).
-- [ ] T076 Integrate automated content generation into CI pipeline (if applicable).
+- [ ] T088 Develop CLI tool/script to automate content generation using Spec-Kit Plus and Claude Code (`tools/content_automator.py`).
+- [ ] T089 Integrate automated content generation into CI pipeline (if applicable).
 
 ---
 
